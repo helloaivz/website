@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <title>User Registration System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<body sec:authorize="isAuthenticated()">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" th:href="@{/}">User Registration System</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" th:href="@{/logout}">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <p class="text-center">
+                    Welcome <b><span sec:authentication="name"></span></b>
+                </p>
+                        <h1 class="text-center">Introduce Your Self</h1>
+                        <div class="card-body">
+                            <p>Hi <b><span sec:authentication="principal.fullName"></span></b>, please enter your details below.</span></p>
+                        
+                            <form
+                              method="post"
+                              role="form" 
+                              th:action="@{/details/save}"
+                              th:object="${intro}"
+                            >
+                              <div class="form-group mb-3">
+                                <label class="form-label">Age: </label>
+                                <input
+                                        class="form-control"
+                                        id="age"
+                                        name="age"
+                                        placeholder="Enter your age"
+                                        th:field="*{age}"
+                                        type="number"
+                                        required
+                                />
+                                <p th:errors = "*{age}" class="text-danger"
+                                th:if="${#fields.hasErrors('age')}"></p>
+                              </div>
+                              
+                              <div class="form-group mb-3">
+                                <label class="form-label">Select Gender: </label>
+                                <select
+                                        class="form-control"
+                                        id="gender"
+                                        name="gender"
+                                        placeholder="Enter your gender"
+                                        th:field="*{gender}"
+                                        type="text"
+                                        required
+                                >
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                </select>
+                                <p th:errors = "*{gender}" class="text-danger"
+                                th:if="${#fields.hasErrors('gender')}"></p>
+                              </div>
+                              <div class="form-group mb-3">
+                                <label class="form-label">Address: </label>
+                                <input
+                                        class="form-control"
+                                        id="address"
+                                        name="address"
+                                        placeholder="Enter your address"
+                                        th:field="*{address}"
+                                        type="text"
+                                        required
+                                />
+                                <p th:errors = "*{address}" class="text-danger"
+                                th:if="${#fields.hasErrors('address')}"></p>
+                              </div>
+                              <div class="form-group mb-3">
+                                <label class="form-label">Hobbies and Interests:</label>
+                                <textarea
+                                        class="form-control"
+                                        id="hobbies"
+                                        name="address"
+                                        placeholder="Enter your Hobbies and Interests"
+                                        th:field="*{hobbies}"
+                                        type="text" 
+                                        required ></textarea>
+                                <p th:errors = "*{hobbies}" class="text-danger"
+                                th:if="${#fields.hasErrors('hobbies')}"></p>
+
+                              </div>
+                              <div class="form-group">
+                                <button class="btn btn-primary" type="submit">Submit</button>
+                              </div>
+                        </form>
+                        </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
